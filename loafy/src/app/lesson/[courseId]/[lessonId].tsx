@@ -39,7 +39,7 @@ export default function LessonScreen() {
   };
 
   return (
-    <SafeAreaView style={styles.screen} testID={`lesson-${lesson.id}`}>
+    <SafeAreaView style={styles.screen} testID={`screen-lesson-${lesson.id}`}>
       <View style={styles.header}>
         <Pressable onPress={() => router.back()} hitSlop={12} testID="lesson-back" accessibilityLabel="Back">
           <MaterialCommunityIcons name="arrow-left" size={26} color={colors.text} />
@@ -60,7 +60,7 @@ export default function LessonScreen() {
         {lesson.ingredients ? (
           <View style={styles.card} testID="lesson-ingredients">
             <View style={styles.row}>
-              <Text style={[styles.th, { flex: 1 }]}>Ingredient</Text>
+              <Text style={[styles.th, { flex: 1, textAlign: 'left' }]}>Ingredient</Text>
               <Text style={styles.th}>Grams</Text>
               <Text style={styles.th}>Baker’s %</Text>
             </View>
@@ -102,9 +102,16 @@ export default function LessonScreen() {
         />
       </View>
 
-      <Modal visible={celebrating} transparent animationType="fade" onRequestClose={() => setCelebrating(false)}>
+      <Modal
+        visible={celebrating}
+        transparent
+        animationType="fade"
+        onRequestClose={() => setCelebrating(false)}
+        navigationBarTranslucent
+        statusBarTranslucent
+      >
         <View style={styles.overlay}>
-          <View style={styles.celebrate} testID="lesson-celebrate">
+          <View style={styles.celebrate} testID="lesson-celebration">
             <Loafy mood="celebrate" size={200} />
             <Text style={[font.title, { textAlign: 'center' }]}>Beautiful bake!</Text>
             <Text style={[font.body, { textAlign: 'center', color: colors.textMuted }]}>

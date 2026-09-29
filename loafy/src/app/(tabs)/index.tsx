@@ -29,7 +29,7 @@ export default function Learn() {
   const lockedCount = courses.flatMap((c) => c.lessons).filter((l) => !l.free).length;
 
   return (
-    <SafeAreaView style={styles.screen} edges={['top']} testID="home">
+    <SafeAreaView style={styles.screen} edges={['top']} testID="screen-home">
       <ScrollView contentContainerStyle={styles.content}>
         <View style={styles.header}>
           <View style={{ flex: 1 }}>

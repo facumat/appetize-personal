@@ -31,7 +31,7 @@ export default function Profile() {
     ]);
 
   return (
-    <SafeAreaView style={styles.screen} edges={['top']} testID="profile">
+    <SafeAreaView style={styles.screen} edges={['top']} testID="screen-profile">
       <ScrollView contentContainerStyle={styles.content}>
         <View style={styles.avatar}>
           <Loafy mood="wave" size={140} />

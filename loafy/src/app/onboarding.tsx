@@ -83,7 +83,7 @@ export default function Onboarding() {
 
   if (step === 'welcome') {
     return (
-      <SafeAreaView style={styles.screen} testID="onboarding-welcome">
+      <SafeAreaView style={styles.screen} testID="screen-onboarding-welcome">
         <View style={styles.center}>
           <Loafy mood="wave" size={260} />
           <Text style={styles.hero}>Hi, I’m Loafy!</Text>
@@ -98,7 +98,7 @@ export default function Onboarding() {
 
   if (step === 'personalizing') {
     return (
-      <SafeAreaView style={styles.screen} testID="onboarding-personalizing">
+      <SafeAreaView style={styles.screen} testID="screen-onboarding-personalizing">
         <View style={styles.center}>
           <Loafy mood="proofing" size={240} />
           <Text style={styles.heading}>Proofing your plan…</Text>
@@ -127,7 +127,7 @@ export default function Onboarding() {
     (step === 'goal' && !!goal);
 
   return (
-    <SafeAreaView style={styles.screen} testID={`onboarding-${step}`}>
+    <SafeAreaView style={styles.screen} testID={`screen-onboarding-${step}`}>
       <KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
         <View style={styles.header}>
           <Pressable onPress={back} testID="onboarding-back" hitSlop={12} accessibilityLabel="Back">

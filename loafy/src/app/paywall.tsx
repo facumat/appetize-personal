@@ -2,7 +2,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { router, useLocalSearchParams } from 'expo-router';
 import { useState } from 'react';
 import { Alert, Modal, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { Button } from '../components/Button';
 import { Loafy } from '../components/Loafy';
@@ -37,7 +37,7 @@ export default function Paywall() {
 
   if (phase === 'success') {
     return (
-      <SafeAreaView style={[styles.screen, styles.center]} testID="purchase-success">
+      <SafeAreaView style={[styles.screen, styles.center]} testID="screen-purchase-success">
         <Loafy mood="celebrate" size={260} />
         <Text style={styles.title}>You’re a Pro baker{profile.name ? `, ${profile.name}` : ''}!</Text>
         <Text style={styles.subtitle}>
@@ -51,7 +51,7 @@ export default function Paywall() {
   }
 
   return (
-    <SafeAreaView style={styles.screen} testID="paywall">
+    <SafeAreaView style={styles.screen} testID="screen-paywall">
       <View style={styles.topBar}>
         <Pressable onPress={leave} hitSlop={12} testID="paywall-close" accessibilityLabel="Close">
           <MaterialCommunityIcons name="close" size={26} color={colors.textMuted} />
@@ -60,7 +60,7 @@ export default function Paywall() {
 
       <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
         <View style={styles.hero}>
-          <Loafy mood="idle" size={150} />
+          <Loafy mood="idle" size={110} />
           <Text style={styles.title}>Unlock Loafy Pro</Text>
           <Text style={styles.subtitle}>
             {profile.name ? `${profile.name}, your` : 'Your'} personal baking path is ready. Go Pro to bake every
@@ -160,11 +160,12 @@ type SheetProps = {
 
 /** Mocked app-store confirmation sheet. No real payment happens. */
 function PurchaseSheet({ visible, processing, plan, onCancel, onConfirm }: SheetProps) {
+  const insets = useSafeAreaInsets();
   return (
-    <Modal visible={visible} transparent animationType="slide" onRequestClose={onCancel}>
+    <Modal visible={visible} transparent animationType="slide" onRequestClose={onCancel} navigationBarTranslucent statusBarTranslucent>
       <View style={styles.overlay}>
         <Pressable style={StyleSheet.absoluteFill} onPress={processing ? undefined : onCancel} />
-        <View style={styles.sheet} testID="purchase-sheet">
+        <View style={[styles.sheet, { paddingBottom: spacing.md + insets.bottom }]} testID="purchase-sheet">
           <View style={styles.handle} />
           <View style={styles.sheetHeader}>
             <View style={styles.appIcon}>
@@ -215,7 +216,7 @@ const styles = StyleSheet.create({
   content: { paddingHorizontal: spacing.lg, paddingBottom: spacing.md },
   title: { ...font.title, textAlign: 'center' },
   subtitle: { ...font.body, color: colors.textMuted, textAlign: 'center' },
-  perks: { gap: 12, marginVertical: spacing.md },
+  perks: { gap: 10, marginVertical: spacing.md },
   perk: { flexDirection: 'row', alignItems: 'center', gap: 12 },
   perkIcon: {
     width: 36,

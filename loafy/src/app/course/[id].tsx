@@ -1,7 +1,7 @@
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { router, useLocalSearchParams } from 'expo-router';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { Button } from '../../components/Button';
 import { ProBadge } from '../../components/ProBadge';
@@ -13,6 +13,7 @@ export default function CourseScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const course = getCourse(id);
   const { isPro, isLessonComplete } = useAppState();
+  const insets = useSafeAreaInsets();
 
   if (!course) return null;
 
@@ -25,12 +26,19 @@ export default function CourseScreen() {
   const done = course.lessons.filter((l) => isLessonComplete(course.id, l.id)).length;
 
   return (
-    <SafeAreaView style={styles.screen} testID={`course-${course.id}`}>
+    <SafeAreaView style={styles.screen} edges={['bottom']} testID={`screen-course-${course.id}`}>
+      <Pressable
+        onPress={() => router.back()}
+        style={[styles.back, { top: insets.top + spacing.sm }]}
+        testID="course-back"
+        accessibilityLabel="Back"
+      >
+        <MaterialCommunityIcons name="arrow-left" size={24} color={colors.text} />
+      </Pressable>
       <ScrollView contentContainerStyle={{ paddingBottom: spacing.lg }}>
-        <View style={[styles.hero, { backgroundColor: course.color }]}>
-          <Pressable onPress={() => router.back()} style={styles.back} testID="course-back" accessibilityLabel="Back">
-            <MaterialCommunityIcons name="arrow-left" size={24} color={colors.text} />
-          </Pressable>
+        <View
+          style={[styles.hero, { backgroundColor: course.color, paddingTop: insets.top, height: 200 + insets.top }]}
+        >
           <Text style={styles.emoji}>{course.emoji}</Text>
         </View>
 
@@ -104,8 +112,8 @@ const styles = StyleSheet.create({
   hero: { height: 200, alignItems: 'center', justifyContent: 'center' },
   back: {
     position: 'absolute',
-    top: spacing.md,
     left: spacing.md,
+    zIndex: 2,
     width: 40,
     height: 40,
     borderRadius: 20,
